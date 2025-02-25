@@ -10,12 +10,12 @@ class ProductManager {
         let products = await fs.readFile(this.path, "utf-8")
         return JSON.parse(products)
     }
-    exist = async (id) =>{
+    exist = async (id) => {
         let products = await this.readProduct()
         return products.find(prod => prod.id === id)
     }
     writeProducts = async (product) => {
-        await fs.writeFile(this.path, JSON.stringify(product))
+        await fs.writeFile(this.path, JSON.stringify(product, null, 5))
     }
 
 
@@ -30,27 +30,27 @@ class ProductManager {
         return await this.readProduct()
     }
     getProductById = async (id) => {
-        
+
         let productById = this.exist(id)
-        if(!productById) return "Producto no encontrado"
+        if (!productById) return "Producto no encontrado"
         return productById
 
     }
-    
-    updateProducts = async(id, product) =>{
+
+    updateProducts = async (id, product) => {
         let productById = this.exist(id)
-        if(!productById) return "Producto no encontrado"
+        if (!productById) return "Producto no encontrado"
         await this.deleteProduct(id)
         let productOld = await this.readProduct()
-        let products = [{...product, id : id, ...productOld}]
+        let products = [{ ...product, id: id, ...productOld }]
         await this.writeProducts(products)
         return "Producto actualizado"
     }
 
-    deleteProduct = async (id) =>{
+    deleteProduct = async (id) => {
         let products = await this.readProduct()
         let existProduct = products.some(prod => prod.id === id)
-        if(existProduct){
+        if (existProduct) {
             let filterProducts = products.filter(prod => prod.id != id)
             await this.writeProducts(filterProducts)
             return "Producto eliminado"

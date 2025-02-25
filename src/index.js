@@ -8,8 +8,8 @@ const port = 8080
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.use("/products", ProductRouter)
-app.use("/api/cart", CartRouter)
+app.use("/product", ProductRouter)
+app.use("/api/carts", CartRouter)
 
 app.listen(port, () => {
     console.log(`Servidor express puerto ${port}`)

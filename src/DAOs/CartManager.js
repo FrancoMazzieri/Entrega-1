@@ -17,7 +17,7 @@ class CartManager {
     }
 
     writeCarts = async (carts) => {
-        await fs.writeFile(this.path, JSON.stringify(carts))
+        await fs.writeFile(this.path, JSON.stringify(carts, null, 5))
     }
 
     exist = async (id) => {
