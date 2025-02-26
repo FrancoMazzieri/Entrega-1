@@ -1,8 +1,7 @@
 import { promises as fs } from 'fs'
-import { nanoid } from 'nanoid'
 class ProductManager {
     constructor() {
-        this.path = "./src/models/product.json"
+        this.path = "./src/data/product.json"
 
     }
 
@@ -12,26 +11,38 @@ class ProductManager {
     }
     exist = async (id) => {
         let products = await this.readProduct()
+        id = Number(id);
         return products.find(prod => prod.id === id)
     }
     writeProducts = async (product) => {
         await fs.writeFile(this.path, JSON.stringify(product, null, 5))
     }
 
-
     addProducts = async (product) => {
         let productOld = await this.readProduct()
-        product.id = nanoid()
+
+        if (!Array.isArray(productOld)) productOld = [];
+
+        console.log("Producto recibido:", product);
+
+        product.id = productOld.length + 1
+
         let productAll = [...productOld, product]
         await this.writeProducts(productAll)
         return "Producto agregado"
     }
+
     getProduct = async () => {
         return await this.readProduct()
     }
     getProductById = async (id) => {
 
-        let productById = this.exist(id)
+        console.log("Buscando producto con ID:", id)
+
+        let productById = await this.exist(id)
+
+        console.log("Resultado de this.exist(id):", productById);
+
         if (!productById) return "Producto no encontrado"
         return productById
 
@@ -49,6 +60,7 @@ class ProductManager {
 
     deleteProduct = async (id) => {
         let products = await this.readProduct()
+        id = Number(id);
         let existProduct = products.some(prod => prod.id === id)
         if (existProduct) {
             let filterProducts = products.filter(prod => prod.id != id)
@@ -57,8 +69,8 @@ class ProductManager {
         }
         return "Producto a eliminar no existe"
     }
-
 }
+
 export default ProductManager
 
 

@@ -1,13 +1,12 @@
 import { promises as fs } from 'fs'
-import { nanoid } from 'nanoid'
 import ProductManager from './ProductManager.js'
 
 const productAll = new ProductManager
-
+let idt = 1
 class CartManager {
     constructor() {
 
-        this.path = "./src/models/Carts.json"
+        this.path = "./src/data/Carts.json"
 
     }
 
@@ -27,7 +26,7 @@ class CartManager {
 
     addCarts = async () => {
         let cartsOld = await this.readCarts()
-        let id = nanoid()
+        let id = cartsOld.length + 1
         let cartsAll = [{ id: id, products: [] }, ...cartsOld]
         await this.writeCarts(cartsAll)
         return "Carrito agregado"
