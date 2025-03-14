@@ -36,17 +36,24 @@ class ProductManager {
         return await this.readProduct()
     }
     getProductById = async (id) => {
-
         console.log("Buscando producto con ID:", id)
 
-        let productById = await this.exist(id)
+        try {
+            let productById = await this.exist(id);
 
-        console.log("Resultado de this.exist(id):", productById);
+            console.log("Resultado de this.exist(id):", productById);
 
-        if (!productById) return "Producto no encontrado"
-        return productById
+            if (!productById) {
+                return { error: "Producto no encontrado" }; // Retorna un objeto de error en vez de un string
+            }
 
+            return productById; // Retorna el producto si se encuentra
+        } catch (error) {
+            console.error("Error al buscar el producto:", error);
+            return { error: "Hubo un problema al obtener el producto" }; // Retorna un mensaje de error si ocurre una excepción
+        }
     }
+
 
     updateProducts = async (id, product) => {
         let productById = this.exist(id)

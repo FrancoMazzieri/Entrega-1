@@ -21,6 +21,7 @@ class CartManager {
 
     exist = async (id) => {
         let carts = await this.readCarts()
+        id = Number(id);
         return carts.find(cart => cart.id === id)
     }
 
@@ -33,33 +34,60 @@ class CartManager {
     }
     getCartById = async (id) => {
 
-        let cartById = this.exist(id)
+        let cartById = await this.exist(id)
+
+        console.log("Resultado de this.exist(id):", cartById);
+
         if (!cartById) return "carrito no encontrado"
+
         return cartById
 
     }
     addProductInCart = async (cartId, productId) => {
-        let cartById = this.exist(cartId)
-        if (!cartById) return "carrito no encontrado"
-
-        let productById = await productAll.exist(productId)
-        if (!productById) return "producto no encontrado"
-
-        let cartAll = await this.readCarts()
-        let cartFilter = cartAll.filter((cart) => cart.id != cartById)
-
-        if (cartById.products.some((prod) => prod.id === productId)) {
-            let productInCart = cartById.products.find((prod) => prod.id === productId)
-            productInCart.cantidad++
-            let cartConcat = [productInCart, ...cartFilter]
-            await this.writeCarts(cartConcat)
-            return "Producto sumado al carrito"
+        try {
+            cartId = Number(cartId);
+            productId = Number(productId);
+    
+            if (isNaN(cartId) || isNaN(productId)) {
+                return { error: "IDs de carrito o producto no son válidos" };
+            }
+    
+            let cartById = await this.exist(cartId);
+            if (!cartById) return { error: "Carrito no encontrado" };
+    
+            let productById = await productAll.exist(productId);
+            if (!productById) return { error: "Producto no encontrado" };
+    
+            // Obtener todos los carritos y filtrar el que se está editando
+            let cartAll = await this.readCarts();
+            let cartFilter = cartAll.filter((cart) => cart.id !== cartById.id);
+    
+            // Clonar los productos para evitar modificar directamente el carrito
+            let updatedProducts = [...cartById.products];
+    
+            let existingProduct = updatedProducts.find((prod) => prod.id === productId);
+            if (existingProduct) {
+                existingProduct.cantidad++;
+            } else {
+                updatedProducts.push({ id: productById.id, cantidad: 1 });
+            }
+    
+            // Crear nuevo carrito actualizado
+            let updatedCart = { ...cartById, products: updatedProducts };
+            let updatedCarts = [updatedCart, ...cartFilter];
+    
+            await this.writeCarts(updatedCarts);
+    
+            return {
+                success: true,
+                message: existingProduct ? "Producto sumado al carrito" : "Producto agregado al carrito",
+                cart: updatedCart,
+            };
+        } catch (error) {
+            console.error("Error en addProductInCart:", error);
+            return { error: "Error interno del servidor" };
         }
-
-        let cartConcat = [{ id: cartId, products: [{ id: productById.id, cantidad: 1 }] }, ...cartFilter]
-        await this.writeCarts(cartConcat)
-        return "Producto agregado al carrito"
-    }
+    };
 }
 
 export default CartManager

@@ -1,35 +1,24 @@
 [
      {
-          "0": {
-               "title": "Laptop",
-               "description": "Electrónica",
-               "code": 120,
-               "price": "12000",
-               "status": true,
-               "stock": 25,
-               "category": "Tecnologia",
-               "thumbnails": "imagen",
-               "id": 1
-          },
-          "1": {
-               "title": "Coca-Cola",
-               "description": "Gaseosa",
-               "code": 125,
-               "price": "1300",
-               "status": true,
-               "stock": 500,
-               "category": "Bebida",
-               "thumbnails": "imagen.coca",
-               "id": 2
-          },
-          "title": "Auto",
-          "description": "Vehiculo",
-          "code": 126,
-          "price": "130000",
+          "title": "Laptop",
+          "description": "Electrónica",
+          "code": 120,
+          "price": "12000",
           "status": true,
-          "stock": 10,
-          "category": "Transporte",
-          "thumbnails": "imagen.auto.porch",
-          "id": "3"
+          "stock": 25,
+          "category": "Tecnologia",
+          "thumbnails": "imagen",
+          "id": 1
+     },
+     {
+          "title": "Coca",
+          "description": "Bebida",
+          "code": 12,
+          "price": "100",
+          "status": true,
+          "stock": 2,
+          "category": "Comestible",
+          "thumbnails": "imagen",
+          "id": 2
      }
 ]
