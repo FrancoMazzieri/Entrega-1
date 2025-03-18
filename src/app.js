@@ -46,16 +46,16 @@ io.on("connection", async (clientSocket) => {
         }
     })
 
-    /*clientSocket.on('deleteProduct', async data => {
+    clientSocket.on('deleteProduct', async data => {
         try {
-            await ProductManager.deleteProduct(data)
-            let datos = await ProductManager.getProduct()
+            await productManager.deleteProduct(data)
+            let datos = await productManager.getProduct()
             io.emit('productoEliminado', datos)
         } catch (error) {
             console.log(error)
         }
     })
-*/
+
 
 });
 
