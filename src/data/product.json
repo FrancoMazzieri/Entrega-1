@@ -20,5 +20,16 @@
           "category": "Comestible",
           "thumbnails": "imagen",
           "id": 2
+     },
+     {
+          "title": "Smartphone",
+          "description": "Comunicación",
+          "code": 554,
+          "price": "1500",
+          "status": true,
+          "stock": 12,
+          "category": "Tecnologia",
+          "thumbnails": "foto-smartphone",
+          "id": 3
      }
 ]

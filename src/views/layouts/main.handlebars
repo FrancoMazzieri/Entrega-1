@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RealTime Products</title>
+</head>
+<body>
+  {{{body}}}
+  
+    {{!-- Incluir socket io si es necesario --}}
+    {{#if useWS}}
+    <script src="/socket.io/socket.io.js"></script>
+    {{/if}}
+
+    {{!-- desde la ruta en express, podremos incluir 1 o varios archivos js indicando su nombre en scripts --}}
+    {{#each scripts }}
+    <script src="js/{{this}}"></script>
+    {{/each}}
+</body>
+</html>
