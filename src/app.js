@@ -57,7 +57,6 @@ io.on("connection", async (clientSocket) => {
     })
 */
 
-
 });
 
 app.engine('handlebars', ExpressHandlebars.engine())
