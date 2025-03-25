@@ -1,24 +1,35 @@
 [
      {
-          "title": "Laptop",
-          "description": "Electrónica",
-          "code": 120,
+          "title": "Samsung A53",
+          "description": "Smartphone",
+          "code": 24,
           "price": "12000",
           "status": true,
-          "stock": 25,
+          "stock": 3,
           "category": "Tecnologia",
-          "thumbnails": "imagen",
-          "id": 1
+          "thumbnails": "imagen-smart",
+          "id": 2
      },
      {
-          "title": "Coca",
-          "description": "Bebida",
-          "code": 12,
-          "price": "100",
+          "title": "awda",
+          "description": "awd",
+          "code": 415,
+          "price": "12",
           "status": true,
           "stock": 2,
-          "category": "Comestible",
-          "thumbnails": "imagen",
-          "id": 2
+          "category": "casdad",
+          "thumbnails": "awd",
+          "id": 5
+     },
+     {
+          "title": "coca",
+          "description": "Gaseosa",
+          "code": 551,
+          "price": "2151",
+          "status": true,
+          "stock": 23,
+          "category": "Bebida",
+          "thumbnails": "imagen-coca",
+          "id": 6
      }
 ]

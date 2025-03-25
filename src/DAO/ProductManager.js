@@ -19,17 +19,25 @@ class ProductManager {
     }
 
     addProducts = async (product) => {
-        let productOld = await this.readProduct()
+        try {
+            let productOld = await this.readProduct();
 
-        if (!Array.isArray(productOld)) productOld = [];
+            if (!Array.isArray(productOld)) productOld = [];
 
-        console.log("Producto recibido:", product);
+            console.log("Producto recibido:", product);
 
-        product.id = productOld.length + 1
+            // Obtener el ID más alto y sumarle 1
+            const maxId = productOld.length > 0 ? Math.max(...productOld.map(p => p.id)) : 0;
+            const newProduct = { ...product, id: maxId + 1 };
 
-        let productAll = [...productOld, product]
-        await this.writeProducts(productAll)
-        return "Producto agregado"
+            let productAll = [...productOld, newProduct];
+
+            await this.writeProducts(productAll);
+            return "Producto agregado";
+        } catch (error) {
+            console.error("Error al agregar producto:", error);
+            return "Error al agregar producto";
+        }
     }
 
     getProduct = async () => {
