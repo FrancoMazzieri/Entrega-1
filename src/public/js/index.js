@@ -5,11 +5,10 @@ let submitProduct = document.querySelector('#submitProduct')
 let title = document.querySelector('#title')
 let description = document.querySelector('#description')
 let price = document.querySelector('#price')
-let thumbnails = document.querySelector('#thumbnail') 
+let thumbnail = document.querySelector('#thumbnail') 
 let code = document.querySelector('#code')
 let stock = document.querySelector('#stock')
-let category = document.querySelector('#category') // Necesitamos input para categoría
-
+let category = document.querySelector('#category') 
 let productID = document.querySelector('#titleDelete')
 let deleteBtn = document.querySelector('#deleteProduct')
 
@@ -32,7 +31,7 @@ submitProduct.addEventListener('click', (event) => {
         status: true,
         stock: parseInt(stock.value),
         category: category.value,
-        thumbnails: thumbnails.value
+        thumbnail: thumbnail.value
     }
 
     socket.emit('product', product)
@@ -44,7 +43,7 @@ submitProduct.addEventListener('click', (event) => {
     price.value = ''
     stock.value = ''
     category.value = ''
-    thumbnails.value = ''
+    thumbnail.value = ''
 })
 
 // Eliminar producto
@@ -66,7 +65,7 @@ function renderProducts(data) {
                                     <p>Status: ${element.status}</p> 
                                     <p>Stock: ${element.stock}</p> 
                                     <p>Category: ${element.category}</p> 
-                                    <p>Thumbnail: ${element.thumbnails}</p> 
+                                    <p>Thumbnail: ${element.thumbnail}</p> 
                                     <p>ID: ${element.id}</p> 
                                 </div>`
     })

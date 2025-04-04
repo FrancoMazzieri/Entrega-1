@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 import ProductRouter from "./router/product.routes.js";
 import CartRouter from "./router/carts.routes.js";
 import ViewsRouter from "./router/views.routes.js";
@@ -7,9 +8,10 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
-import ProductManager from "./DAO/ProductManager.js";
+import { MongoProductManager } from "./DAO/mongo/mongoProductsManager.js";
 
-const productManager = new ProductManager();
+
+const productManager = new MongoProductManager();
 
 const app = express()
 const httpServer = createServer(app); // Create HTTP server
@@ -23,11 +25,60 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, '/public')))
 
+// Conexion mongoose
+mongoose.connect("mongodb+srv://frank:K09G390O2V5Xqw70@codertest.nxksjus.mongodb.net/?retryWrites=true&w=majority&appName=CoderTest")
+    .then(() => {
+        console.log("conectado a la base de datos")
+    })
+    .catch(error => { console.error("La conexion no se ha podido realizar", error) })
+
 // Configuración de Socket.io
-io.on("connection", async (clientSocket) => {
+io.on('connection', async (clientSocket) => {
+    console.log(`Nuevo cliente conectado: ${clientSocket.id}`);
+
+    try {
+        const productos = await productManager.getProducts();
+        clientSocket.emit('mensajeServer', productos.docs);
+    } catch (error) {
+        console.error("Error al obtener productos:", error);
+        clientSocket.emit('errorServer', { error: "No se pudieron cargar los productos." });
+    }
+
+    // Agregar producto
+    clientSocket.on('product', async data => {
+        console.log('data: ', data)
+        const product = data;
+        try {
+            await productManager.addProduct(product)
+            let datos = await productManager.getProducts()
+            io.emit('productoAgregado', datos)
+        } catch (error) {
+            console.log(error)
+
+        }
+    })
+
+    // Eliminar producto
+    clientSocket.on('deleteProduct', async data => {
+        try {
+            await productManager.deleteProduct(data)
+            let datos = await productManager.getProducts()
+            io.emit('productoEliminado', datos)
+        } catch (error) {
+            console.log(error)
+        }
+    })
+
+    clientSocket.on("disconnect", () => {
+        console.log(`Cliente ${clientSocket.id} desconectado`);
+    });
+});
+
+// Configuración de Socket.io
+/*io.on("connection", async (clientSocket) => {
     console.log("Nuevo cliente se ha conectado");
     try {
-        const productos = await productManager.getProduct()
+        const productos = await productManager.getProducts()
         clientSocket.emit('mensajeServer', productos)
     } catch (error) {
         console.log(error)
@@ -37,8 +88,8 @@ io.on("connection", async (clientSocket) => {
         console.log('data: ', data)
         const product = data;
         try {
-            await productManager.addProducts(product)
-            let datos = await productManager.getProduct()
+            await productManager.addProduct(product)
+            let datos = await productManager.getProducts()
             io.emit('productoAgregado', datos)
         } catch (error) {
             console.log(error)
@@ -49,7 +100,7 @@ io.on("connection", async (clientSocket) => {
     clientSocket.on('deleteProduct', async data => {
         try {
             await productManager.deleteProduct(data)
-            let datos = await productManager.getProduct()
+            let datos = await productManager.getProducts()
             io.emit('productoEliminado', datos)
         } catch (error) {
             console.log(error)
@@ -57,7 +108,9 @@ io.on("connection", async (clientSocket) => {
     })
 
 
-});
+});*/
+
+
 
 app.engine('handlebars', ExpressHandlebars.engine())
 app.set('views', __dirname + '/views')

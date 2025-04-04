@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
 </head>
 
 <body>
@@ -12,25 +11,25 @@
         <h2>Agrega un producto</h2>
         <form>
             <label>Titulo</label> <br>
-            <input type="text" name="title" id="title"> <br>
+            <input type="text" name="title" id="title" placeholder="Texto por defecto"> <br>
 
             <label>Descripcion</label> <br>
-            <input type="text" name="description" id="description"> <br>
+            <input type="text" name="description" id="description" placeholder="Texto por defecto"> <br>
 
             <label>Precio</label> <br>
-            <input type="number" name="price" id="price"> <br>
+            <input type="number" name="price" id="price" placeholder="Texto por defecto"> <br>
 
             <label>Imagen</label> <br>
-            <input type="text" name="thumbnail" id="thumbnail"> <br>
+            <input type="text" name="thumbnail" id="thumbnail" placeholder="Texto por defecto"> <br>
 
             <label>Code</label> <br>
-            <input type="number" name="code" id="code"> <br>
+            <input type="number" name="code" id="code" placeholder="Texto por defecto"> <br>
 
             <label>Stock</label> <br>
-            <input type="number" name="stock" id="stock"> <br>
+            <input type="number" name="stock" id="stock" placeholder="Texto por defecto"> <br>
 
             <label>Categoría</label> <br>
-            <input type="text" name="category" id="category"> <br>
+            <input type="text" name="category" id="category" placeholder="Texto por defecto"> <br>
 
             <label>Status</label> <br>
             <input type="checkbox" name="status" id="status" checked> <br>
@@ -40,8 +39,8 @@
 
         <h2>Elimine un producto</h2>
         <form>
-            <label>Ingrese el nombre del producto</label> <br>
-            <input type="text" name="title" id="titleDelete"> <br>
+            <label>Ingrese el ID del producto</label> <br>
+            <input type="text" name="title" id="titleDelete"> <br><br>
 
             <input type="submit" id="deleteProduct">
         </form>
@@ -49,6 +48,7 @@
         <h2>Todos los Productos</h2>
 
         <div id="container"></div>
+
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
