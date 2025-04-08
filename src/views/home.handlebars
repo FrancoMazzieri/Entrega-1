@@ -1,3 +1,8 @@
+<head>
+    <title>Mi app</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
 <div>
     <h2>Todos los Productos</h2>
     {{#each productos}}
@@ -15,14 +20,29 @@
 </div>
 
 
-<a href="/products?page=1">Pág. 1</a>
+<div class="pagination">
 
-{{#if hasPrevPage}}
-    <a href="/products?page={{prevPage}}">Pág. Ant.</a>
-{{/if}}
+    {{!-- Primera página --}}
+    <a href="/products?page=1">Pág. 1</a>
 
-{{#if hasNextPage}}
-    <a href="/products?page={{nextPage}}">Pág. Sig.</a>
-{{/if}}
+    {{!-- Página anterior --}}
+    {{#if hasPrevPage}}
+        <a href="/products?page={{prevPage}}">Pág. Ant.</a>
+    {{else}}
+        <span class="disabled">Pág. Ant.</span>
+    {{/if}}
 
-<a href="/products?page={{totalPages}}">Últ. pág.</a>
+    {{!-- Página actual --}}
+    <span class="current">Página {{page}} de {{totalPages}}</span>
+
+    {{!-- Página siguiente --}}
+    {{#if hasNextPage}}
+        <a href="/products?page={{nextPage}}">Pág. Sig.</a>
+    {{else}}
+        <span class="disabled">Pág. Sig.</span>
+    {{/if}}
+
+    {{!-- Última página --}}
+    <a href="/products?page={{totalPages}}">Últ. pág.</a>
+
+</div>
