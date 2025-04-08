@@ -3,11 +3,9 @@ import productsModel from "../../models/products.js"
 export class MongoProductManager {
 
     async addProduct(product) {
-        try {
-            await productsModel.create(product)
-        } catch (error) {
-            console.log(error)
-        }
+
+        await productsModel.create(product)
+
     }
 
     async getProducts(limit = 10, page = 1, filtro = {}, sort = {}) {
@@ -28,28 +26,26 @@ export class MongoProductManager {
     }
 
     async getProductById(pid) {
-        try {
-            const data = await productsModel.find()
 
-            return data.find(product => product.id == pid)
-        } catch (error) {
-            console.log(error)
-        }
+        const data = await productsModel.find()
+
+        return data.find(product => product.id == pid)
+
+    }
+
+    async getBy(filtro = {}) {   // {stock:0}
+        await productsModel.findOne(filtro).lean()
     }
 
     async updateProduct(pid, obj) {
-        try {
-            await productsModel.findOneAndReplace({ _id: pid }, obj)
-        } catch (error) {
-            console.log(error)
-        }
+
+        await productsModel.findOneAndReplace({ _id: pid }, obj)
+
     }
 
     async deleteProduct(pid) {
-        try {
-            await productsModel.findOneAndDelete({ _id: pid })
-        } catch (error) {
-            console.log(error)
-        }
+
+        await productsModel.findOneAndDelete({ _id: pid })
+
     }
 }

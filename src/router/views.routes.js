@@ -17,7 +17,7 @@ router.get('/products', async (req, res) => {
     let orden = sort === 'asc' ? { price: 1 } : sort === 'desc' ? { price: -1 } : {};
 
     try {
-        const { docs, hasPrevPage, hasNextPage, prevPage, nextPage } = 
+        const { docs, hasPrevPage, hasNextPage, prevPage, nextPage } =
             await mongoProductManager.getProducts(limit, page, filtro, orden);
 
         let datos = {
@@ -39,12 +39,12 @@ router.get('/products', async (req, res) => {
 });
 
 
-router.get('/carts/:cid', async (req, res)=>{
-    const {cid} = req.params
-    const {limit = 1 , page = 1} = req.query
+router.get('/carts/:cid', async (req, res) => {
+    const { cid } = req.params
+    const { limit = 1, page = 1 } = req.query
     console.log(limit)
     try {
-        const {docs, hasPrevPage, hasNextPage, prevPage, nextPage} = await mongoCartManager.getCartProducts(cid, limit, page)
+        const { docs, hasPrevPage, hasNextPage, prevPage, nextPage } = await mongoCartManager.getCartProducts(cid, limit, page)
         let data = docs[0].products
         let datos = {
             productos: data,
@@ -61,8 +61,14 @@ router.get('/carts/:cid', async (req, res)=>{
     }
 })
 
-router.get('/realtimeproducts', (req, res)=>{
-    res.render('realTimeProducts')
+router.get('/realtimeproducts', (req, res) => {
+    try {
+        res.render('realTimeProducts')
+    } catch (error) {
+        console.log(error)
+    }
+
+
 })
 
 

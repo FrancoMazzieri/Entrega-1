@@ -14,13 +14,15 @@
     {{/each}}
 </div>
 
-<div class="pagination">
-    {{#if hasPrevPage}}
-    <a href="/products?page={{prevPage}}&&limit={{limit}}" class="center"><button>Anterior</button></a>
-    {{/if}}
-    <p class="page">{{page}}</p>
-    {{#if hasNextPage}}
-    <a href="/products?page={{nextPage}}&&limit={{limit}}" class="center"><button>Siguiente</button></a>
-    {{/if}}
-</div>
-</div>
+
+<a href="/products?page=1">Pág. 1</a>
+
+{{#if hasPrevPage}}
+    <a href="/products?page={{prevPage}}">Pág. Ant.</a>
+{{/if}}
+
+{{#if hasNextPage}}
+    <a href="/products?page={{nextPage}}">Pág. Sig.</a>
+{{/if}}
+
+<a href="/products?page={{totalPages}}">Últ. pág.</a>

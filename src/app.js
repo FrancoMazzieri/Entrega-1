@@ -111,14 +111,13 @@ io.on('connection', async (clientSocket) => {
 });*/
 
 
-
 app.engine('handlebars', ExpressHandlebars.engine())
 app.set('views', __dirname + '/views')
 app.set('view engine', 'handlebars')
 app.use(express.static(__dirname + '/views'))
 
 app.use('/', ViewsRouter)
-app.use("/api/product", ProductRouter)
+app.use("/api/products", ProductRouter)
 app.use("/api/carts", CartRouter)
 
 httpServer.listen(port, () => {

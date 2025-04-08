@@ -1,26 +1,25 @@
 import { Schema, model } from "mongoose";
-import mongoosePaginate from "mongoose-paginate-v2"
 
 const cartCollection = 'carts'
 
 const cartSchema = Schema({
     products: {
         type: [{
-            pid: {
+            products: {
                 type: Schema.Types.ObjectId,
                 ref: 'products'
             },
             quantity: {
                 type: Number,
+                default: 1
             }
         }]
     }
 })
 
 cartSchema.pre('find', function(){
-    this.populate('products.pid')
+    this.populate('products.products')
 })
 
-cartSchema.plugin(mongoosePaginate)
 
 export default model(cartCollection, cartSchema)
