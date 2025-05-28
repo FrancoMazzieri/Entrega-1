@@ -62,7 +62,6 @@ router.post('/login', async (req, res) => {
             console.warn("Invalid credentials for user: " + email);
             return res.status(401).send({ status: "error", error: "El usuario y la contraseña no coinciden!" });
         }
-
         const tokenUser = {
             name: `${user.first_name} ${user.last_name}`,
             email: user.email,
@@ -70,8 +69,7 @@ router.post('/login', async (req, res) => {
             role: user.role
         };
         const access_token = generateJWToken(tokenUser);
-        console.log(access_token);
-
+        console.log("Token generado: " + access_token);
 
         // Creamos la cookie y almacenamos el access_token en la cookie
         res.cookie('jwtCookieToken', access_token, {

@@ -17,6 +17,8 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import { MongoProductManager } from "./DAO/mongo/mongoProductsManager.js";
 
+import cookieParser from 'cookie-parser';
+
 // Passport
 import passport from 'passport';
 import initializePassport from './config/passport.config.js'
@@ -108,6 +110,8 @@ app.use("/api/products", ProductRouter)
 app.use("/api/carts", CartRouter)
 app.use('/api/sessions', sessionsRouter)
 app.use('/users', usersViewRouter)
+
+app.use(cookieParser());
 
 // Middleware Passport
 initializePassport();
