@@ -105,13 +105,14 @@ app.set('views', __dirname + '/views')
 app.set('view engine', 'handlebars')
 app.use(express.static(__dirname + '/views'))
 
+app.use(cookieParser());
+
 app.use('/', ViewsRouter)
 app.use("/api/products", ProductRouter)
 app.use("/api/carts", CartRouter)
 app.use('/api/sessions', sessionsRouter)
 app.use('/users', usersViewRouter)
 
-app.use(cookieParser());
 
 // Middleware Passport
 initializePassport();

@@ -10,7 +10,8 @@ form.addEventListener('submit', e => {
         body: JSON.stringify(obj),
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+        credentials: 'include'
     }).then(result => {
         if (result.status === 200) {
 
@@ -21,7 +22,7 @@ form.addEventListener('submit', e => {
 
 
                     alert("Login realizado con exito!!")
-                    window.location.replace('/users/');
+                    window.location.replace('/users');
                 });
         } else if (result.status === 401) {
             console.log(result);
