@@ -14,7 +14,7 @@ router.get('/register', (req, res) => {
     res.render("register")
 })
 
-router.get('/',
+router.get('/current',
     // authToken, 
     passportCall('jwt'),
     authorization('user'),

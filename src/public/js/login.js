@@ -22,7 +22,7 @@ form.addEventListener('submit', e => {
 
 
                     alert("Login realizado con exito!!")
-                    window.location.replace('/users');
+                    window.location.replace('/users/current');
                 });
         } else if (result.status === 401) {
             console.log(result);

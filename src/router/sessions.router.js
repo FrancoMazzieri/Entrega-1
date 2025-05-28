@@ -85,6 +85,14 @@ router.post('/login', async (req, res) => {
     }
 })
 
+router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
+  res.json({
+    status: 'success',
+    user: req.user // req.user es asignado por Passport tras validar el token
+  });
+});
+
+
 router.get("/fail-register", (req, res) => {
     res.status(401).send({ error: "Failed to process register!" });
 });
